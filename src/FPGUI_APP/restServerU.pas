@@ -1,9 +1,9 @@
-unit httpServerU;
+unit restServerU;
 
 interface
 
 uses
-  fphttpserver;
+  fphttpserver, fpg_main;
 
 type
 
@@ -21,7 +21,12 @@ implementation
 
 procedure TRestServer.HandleRequest(var ARequest: TFPHTTPConnectionRequest;
   var AResponse: TFPHTTPConnectionResponse);
+var
+  queryString: string;
 begin
+  queryString := ARequest.QueryString;
+  if queryString = 'start' then
+    fpgApplication.Initialize;
   WriteLN(ARequest.QueryString);
 end;
 
