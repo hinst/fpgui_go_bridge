@@ -1,0 +1,1 @@
+go build fui_bridge_hello && fui_bridge_hello.exe 

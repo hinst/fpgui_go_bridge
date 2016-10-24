@@ -1,13 +1,15 @@
 package fui_bridge
 
-import "net"
+import (
+	"os/exec"
+	"strconv"
+)
 
 type TGUI struct {
+	guiCommand *exec.Cmd
 }
 
 func (this *TGUI) Run() {
-	addr, err := net.ResolveTCPAddr("tcp", "localhost:0")
-	if err != nil {
-		panic(err)
-	}
+	this.guiCommand = exec.Command(appDir+"/gui_app.exe", strconv.Itoa(getAvailablePort()))
+	this.guiCommand.Start()
 }

@@ -7,7 +7,7 @@ var
   portNumber: Integer;
 begin
   portNumber := 8600;
-  if ParamCount > 1 then
+  if ParamCount > 0 then
     TryStrToInt(ParamStr(1), portNumber);
   restThread := TRestThread.Create(False);
   restThread.Port := portNumber;
