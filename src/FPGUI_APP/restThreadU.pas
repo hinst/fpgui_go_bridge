@@ -14,6 +14,8 @@ type
   protected
     Server: TRestServer;
     procedure Execute; override;
+  public
+    Port: Integer;
   end;
 
 implementation
@@ -23,7 +25,7 @@ implementation
 procedure TRestThread.Execute;
 begin
   Server := TRestServer.Create(nil);
-  Server.Port := 8600;
+  Server.Port := Port;
   Server.Active := True;
   Server.Free;
 end;
