@@ -3,7 +3,8 @@ unit restServerU;
 interface
 
 uses
-  fphttpserver, fpg_main;
+  fphttpserver, fpg_main,
+  RestWorkerU, SynchronizerU;
 
 type
 
@@ -11,6 +12,7 @@ type
 
   TRestServer = class(TFPHttpServer)
   public
+    Worker: TRestWorker;
     procedure HandleRequest(var ARequest: TFPHTTPConnectionRequest;
       var AResponse: TFPHTTPConnectionResponse); override;
   end;
@@ -21,13 +23,18 @@ implementation
 
 procedure TRestServer.HandleRequest(var ARequest: TFPHTTPConnectionRequest;
   var AResponse: TFPHTTPConnectionResponse);
-var
-  queryString: string;
 begin
-  queryString := ARequest.QueryString;
-  if queryString = 'start' then
-    fpgApplication.Initialize;
-  WriteLN(ARequest.QueryString);
+  if Worker = nil then
+    Worker := TRestWorker.Create;
+  Worker.Clear;
+  Worker.Request := ARequest;
+  Worker.Response := AResponse;
+  MainSynchronizer.Sync(Worker);
+  if Worker.Quit then
+  begin
+    MainSynchronizer.Active := False;
+    StopServerSocket;
+  end;
 end;
 
 end.

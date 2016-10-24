@@ -1,13 +1,15 @@
 program gui_app;
 
-uses restServerU, restThreadU;
+uses restServerU, restThreadU, SynchronizerU, WorkerU, RestWorkerU;
 
 var
-  server: TRestServer;
+  restThread: TRestThread;
 begin
-  server := TRestServer.Create(nil);
-  server.Port := 8600;
-  server.Active := True;
-  server.Free;
+  restThread := TRestThread.Create(False);
+  MainSynchronizer := TSynchronizer.Create;
+  MainSynchronizer.Run;
+  MainSynchronizer.Free;
+  restThread.WaitFor;
+  restThread.Free;
 end.
 
