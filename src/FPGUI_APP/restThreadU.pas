@@ -12,9 +12,9 @@ type
 
   TRestThread = class(TThread)
   protected
-    Server: TRestServer;
     procedure Execute; override;
   public
+    Server: TRestServer;
     Port, ClientPort: Integer;
   end;
 
@@ -27,6 +27,7 @@ begin
   Server := TRestServer.Create(nil);
   Server.Port := Port;
   Server.ClientPort := ClientPort;
+  Server.SendLog('Now starting server...');
   Server.Active := True;
   Server.Free;
 end;
