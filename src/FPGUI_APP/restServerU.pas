@@ -12,6 +12,7 @@ type
 
   TRestServer = class(TFPHttpServer)
   public
+    ClientPort: Integer;
     Worker: TRestWorker;
     procedure HandleRequest(var ARequest: TFPHTTPConnectionRequest;
       var AResponse: TFPHTTPConnectionResponse); override;

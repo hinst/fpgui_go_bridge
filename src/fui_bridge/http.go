@@ -2,7 +2,7 @@ package fui_bridge
 
 import "net"
 
-func getAvailablePort() int {
+func GetAvailablePort() int {
 	addr, err := net.ResolveTCPAddr("tcp", "localhost:0")
 	if err != nil {
 		panic(err)

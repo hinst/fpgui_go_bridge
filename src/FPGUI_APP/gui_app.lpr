@@ -4,13 +4,12 @@ uses SysUtils, restServerU, restThreadU, SynchronizerU, WorkerU, RestWorkerU;
 
 var
   restThread: TRestThread;
-  portNumber: Integer;
 begin
-  portNumber := 8600;
-  if ParamCount >= 1 then
-    TryStrToInt(ParamStr(1), portNumber);
   restThread := TRestThread.Create(False);
-  restThread.Port := portNumber;
+  if ParamCount >= 1 then
+    TryStrToInt(ParamStr(1), restThread.Port);
+  if ParamCount >= 2 then
+    TryStrToInt(ParamStr(2), restThread.ClientPort);
   MainSynchronizer := TSynchronizer.Create;
   MainSynchronizer.Run;
   MainSynchronizer.Free;

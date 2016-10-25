@@ -15,7 +15,7 @@ type
     Server: TRestServer;
     procedure Execute; override;
   public
-    Port: Integer;
+    Port, ClientPort: Integer;
   end;
 
 implementation
@@ -26,6 +26,7 @@ procedure TRestThread.Execute;
 begin
   Server := TRestServer.Create(nil);
   Server.Port := Port;
+  Server.ClientPort := ClientPort;
   Server.Active := True;
   Server.Free;
 end;
